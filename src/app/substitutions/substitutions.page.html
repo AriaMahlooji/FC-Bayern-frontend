@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button fill="clear"  slot="start" color="primary" (click)="backButton()">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+  </ion-button>
+    <ion-title>Substitutions</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ <ion-card>
+   <ion-card-header>
+
+   </ion-card-header>
+   <ion-item>
+    <ion-label>Select the Season</ion-label>
+    <ion-select (ionChange)="filterSubsBasedOnSeason($event)" value="2013-2014">
+      <ion-select-option value="2013-2014">2013-2014</ion-select-option>
+      <ion-select-option value="2014-2015">2014-2015</ion-select-option>
+      <ion-select-option value="2015-2016">2015-2016</ion-select-option>
+      <ion-select-option value="2016-2017">2016-2017</ion-select-option>
+      <ion-select-option value="2017-2018">2017-2018</ion-select-option>
+      <ion-select-option value="2018-2019">2018-2019</ion-select-option>
+      <ion-select-option value="2019-2020">2019-2020</ion-select-option>
+      <ion-select-option value="2020-2021">2020-2021</ion-select-option>
+    </ion-select>
+  </ion-item>
+    <ion-item>
+      <ion-segment  color="secondary" [(ngModel)]="sortMode" (ionChange)="sortModeChange($event)" >
+        <ion-segment-button value="Ascending"><span style="color: dimgray;">Ascending</span></ion-segment-button>
+        <ion-segment-button value="Descending"><span style="color:dimgray;">Descending</span></ion-segment-button>
+    </ion-segment>
+    </ion-item>
+    <ion-card>
+    <ion-card-content *ngFor="let substitution of this.sortedSubsInSeason">
+      <ion-row>
+        <ion-col push="10">
+          <ion-button (click)="analyzeThisSub(substitution)" fill="clear" ><ion-icon slot="end" name="help-circle-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row >
+        <ion-col size="6">
+          <ion-card class="ion-text-center">
+            <ion-card-header>
+              <ion-row>
+                <ion-col>
+                  <ion-card-subtitle ><span *ngIf="substitution['PlayerIn'].length<12" style="font-size:xx-small;">{{substitution['PlayerIn']}}<br>.</span><span *ngIf="substitution['PlayerIn'].length>=12" style="font-size:xx-small;">{{substitution['PlayerIn']}}</span></ion-card-subtitle>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col></ion-col>
+                  <ion-col>
+                    <ion-avatar><ion-img (click)="showMeThisImage(substitution['PlayerIn'])" src="assets/icon/{{substitution['PlayerIn']}}.jpg"></ion-img></ion-avatar>
+                    <ion-icon color="success" name="arrow-up-circle-outline"></ion-icon></ion-col>
+                  <ion-col></ion-col>
+                </ion-row>
+              </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card class="ion-text-center">
+            <ion-card-header>
+              <ion-row>
+                <ion-col>
+                  <ion-card-subtitle><span *ngIf="substitution['PlayerOut'].length<12" style="font-size:xx-small;">{{substitution['PlayerOut']}}<br>.</span><span *ngIf="substitution['PlayerOut'].length>=12" style="font-size:xx-small;">{{substitution['PlayerOut']}}</span></ion-card-subtitle>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col></ion-col>
+                  <ion-col>
+                    <ion-avatar><ion-img (click)="showMeThisImage(substitution['PlayerOut'])" src="assets/icon/{{substitution['PlayerOut']}}.jpg"></ion-img></ion-avatar>
+                    <ion-icon color="danger" name="arrow-down-circle-outline"></ion-icon></ion-col>
+                  <ion-col></ion-col>
+                </ion-row>
+   </ion-card-content>
+  </ion-card>
+</ion-col>
+</ion-row>
+<ion-row>
+<ion-col ><ion-chip color="primary"><ion-icon name="alarm-outline"></ion-icon> &nbsp;{{substitution['Minute']}}'</ion-chip></ion-col>
+<ion-col  (click)="analyzeThisSub2(substitution)"><span style="font-size: small;">{{substitution['Status']}}</span></ion-col>
+<ion-col><ion-chip color="primary"><ion-icon *ngIf="substitution['Overal Eval']<0" color="danger" name="calculator-outline"></ion-icon><ion-icon *ngIf="substitution['Overal Eval']>0" color="success" name="calculator-outline"></ion-icon>  &nbsp;{{substitution['Overal Eval']}}<ion-icon *ngIf="substitution['Overal Eval'] === 0"  name="calculator-outline"></ion-icon></ion-chip></ion-col>
+</ion-row>
+</ion-card-content>
+ </ion-card>
+</ion-card>
+</ion-content>

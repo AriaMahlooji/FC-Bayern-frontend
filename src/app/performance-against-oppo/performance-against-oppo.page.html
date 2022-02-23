@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar  class="ion-text-center">
+    <ion-button fill="clear"  slot="start" color="primary" (click)="backButton()">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+  </ion-button>
+    <ion-title>Performance Against</ion-title>
+  </ion-toolbar>
+  <ion-toolbar  class="ion-text-center">
+    <ion-title class="ion-text-center" color="primary" size="large">{{this.passBetCompService.chosenOpponent}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col size=12 size-sm = "8" offset-sm="2" class="ion-text-center">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            Overal Performance
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <canvas #doughnutCanvas style="position: relative; height:20vh; width:40vw"></canvas>
+        <ion-chip (click)="getFirst3ScoringChances()" color="primary"><ion-label>Highest Chance of Scoring Goal: <br> <span *ngIf="this.firstMaxIndex===0">1' to 15'</span> <span *ngIf="this.firstMaxIndex===1">16' to 30'</span><span *ngIf="this.firstMaxIndex===2">31' to 45'</span><span *ngIf="this.firstMaxIndex===3">46' to 60'</span><span *ngIf="this.firstMaxIndex===4">61' to 75'</span><span *ngIf="this.firstMaxIndex===5">76' to 90'</span></ion-label></ion-chip>
+        <ion-chip (click)="getFirst3ReceivingChances()" color="danger"><ion-label>Highest Chance of Receiveing Goal: <br> <span *ngIf="this.firstMaxIndexR===0">1' to 15'</span> <span *ngIf="this.firstMaxIndexR===1">16' to 30'</span><span *ngIf="this.firstMaxIndexR===2">31' to 45'</span><span *ngIf="this.firstMaxIndexR===3">46' to 60'</span><span *ngIf="this.firstMaxIndexR===4">61' to 75'</span><span *ngIf="this.firstMaxIndexR===5">76' to 90'</span> </ion-label></ion-chip>
+        </ion-card-content>
+      </ion-card>
+      <ion-card >
+        <ion-card-header>
+          <ion-card-title>Scorers</ion-card-title>
+
+        </ion-card-header>
+        <ion-card *ngFor="let scoredPlayer of scoredPlayers">
+
+          <img (click)="showMeThisImage(scoredPlayer)" src="assets/icon/{{scoredPlayer}}.jpg">
+          <ion-card-title><ion-icon name="person-circle-outline"></ion-icon>{{scoredPlayer}}</ion-card-title>
+          <ion-card-subtitle color="primary"><ion-chip><ion-icon name="football-outline"></ion-icon> &nbsp;{{this.scoredPlayersData[scoredPlayer][0]}} Goals</ion-chip></ion-card-subtitle>
+
+        </ion-card>
+      </ion-card>
+      <ion-card >
+        <ion-card-header>
+          <ion-card-title>Substitutions</ion-card-title>
+          <ion-segment color="secondary" value="Descending" (ionChange)="sortModeChange($event)" >
+            <ion-segment-button value="Ascending"><span style="color: dimgray;">Ascending</span></ion-segment-button>
+            <ion-segment-button value="Descending"><span style="color:dimgray;">Descending</span></ion-segment-button>
+        </ion-segment>
+        </ion-card-header>
+        <ion-card-content *ngFor="let substitution of this.sortedSubsAgainstOpponent">
+
+          <ion-row>
+            <ion-col push="5">
+              <ion-button (click)="analyzeThisSub(substitution)" fill="clear" ><ion-icon slot="end" name="help-circle-outline"></ion-icon></ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row >
+            <ion-col size="6">
+              <ion-card>
+                <ion-card-header>
+                  <ion-row>
+                    <ion-col>
+                      <ion-card-subtitle><span *ngIf="substitution['PlayerIn'].length<12" style="font-size:xx-small;">{{substitution['PlayerIn']}}<br>.</span><span *ngIf="substitution['PlayerIn'].length>=12" style="font-size:xx-small;">{{substitution['PlayerIn']}}</span></ion-card-subtitle>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-header>
+                  <ion-card-content>
+                    <ion-row>
+                      <ion-col></ion-col>
+                      <ion-col>
+                        <ion-avatar><ion-img (click)="showMeThisImage(substitution['PlayerIn'])" src="assets/icon/{{substitution['PlayerIn']}}.jpg"></ion-img></ion-avatar>
+                        <ion-icon color="success" name="arrow-up-circle-outline"></ion-icon></ion-col>
+                      <ion-col></ion-col>
+                    </ion-row>
+                  </ion-card-content>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6">
+              <ion-card>
+                <ion-card-header>
+                  <ion-row>
+                    <ion-col>
+                      <ion-card-subtitle><span *ngIf="substitution['PlayerOut'].length<12" style="font-size:xx-small;">{{substitution['PlayerOut']}}<br>.</span><span *ngIf="substitution['PlayerOut'].length>=12" style="font-size:xx-small;">{{substitution['PlayerOut']}}</span></ion-card-subtitle>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-header>
+                  <ion-card-content>
+                    <ion-row>
+                      <ion-col></ion-col>
+                      <ion-col>
+                        <ion-avatar><ion-img (click)="showMeThisImage(substitution['PlayerOut'])" src="assets/icon/{{substitution['PlayerOut']}}.jpg"></ion-img></ion-avatar>
+                        <ion-icon color="danger" name="arrow-down-circle-outline"></ion-icon></ion-col>
+                      <ion-col></ion-col>
+                    </ion-row>
+                  </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col><ion-chip color="primary"><ion-icon name="alarm-outline"></ion-icon> &nbsp;{{substitution['Minute']}}'</ion-chip></ion-col>
+            <ion-col (click)="analyzeThisSub2(substitution)">{{substitution['Status']}}</ion-col>
+            <ion-col><ion-chip color="primary"><ion-icon *ngIf="substitution['Overal Eval']<0" color="danger" name="calculator-outline"></ion-icon><ion-icon *ngIf="substitution['Overal Eval']>0" color="success" name="calculator-outline"></ion-icon>  &nbsp;{{substitution['Overal Eval']}}<ion-icon *ngIf="substitution['Overal Eval'] === 0"  name="calculator-outline"></ion-icon></ion-chip></ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-app>
+  <ion-menu side="start">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title >
+          Text Analysis App
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle>
+          <ion-item lines="none" routerLink = "scores-distribution">
+            <ion-icon color="primary" name="analytics-outline" slot="start" size="large"></ion-icon>
+            <ion-label>15 Minutes Time Spans</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item lines="none" routerLink = "top-scorers">
+            <ion-icon color="primary" name="football-outline" slot="start" size="large"></ion-icon>
+            <ion-label>Overal Performance</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item lines="none" routerLink = "substitutions">
+            <ion-icon src="/assets/icon/Extra Mini Sub4.svg"  slot="start"  size="large"></ion-icon>
+            <ion-label>Substitutions</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item lines="none" routerLink = "precision">
+            <ion-icon color="primary" name="locate-outline" slot="start" size="large"></ion-icon>
+            <ion-label>Current Season</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item lines="none" (click)="onLogout()">
+            <ion-icon color="danger" name="log-out-outline" slot="start" size="large" ></ion-icon>
+            <ion-label>Logout</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet main></ion-router-outlet>
+</ion-app>

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button fill="clear"  slot="start" color="primary" (click)="backButton()">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+  </ion-button>
+    <ion-title color="primary">Current Season</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header class="ion-text-center">
+      <ion-card-title color="primary">FC Bayern VS Dortmund</ion-card-title>
+      <ion-card-subtitle>Season: 2021-2022</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <ion-img (click)="showMeThisImage('/assets/icon/bayerndortmundrealresultB.jpg')" src="/assets/icon/bayerndortmundrealresultB.jpg"></ion-img>
+        </ion-col>
+        <ion-col>
+          <ion-img (click)="showMeThisImage('/assets/icon/bayerndortmundrealresultD.jpg')" src="/assets/icon/bayerndortmundrealresultD.jpg"></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-img (click)="showMeThisImage('/assets/icon/bayerndortmundscoredgoals.jpg')" src="/assets/icon/bayerndortmundscoredgoals.jpg"></ion-img>
+        </ion-col>
+        <ion-col>
+          <ion-img (click)="showMeThisImage('/assets/icon/bayerndortmundreceivedgoals.jpg')" src="/assets/icon/bayerndortmundreceivedgoals.jpg"></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header class="ion-text-center">
+      <ion-card-title color="primary">FC Koln VS FC Bayern</ion-card-title>
+      <ion-card-subtitle>Season: 2021-2022</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <ion-img (click)="showMeThisImage('/assets/icon/kolnbayernrealresultK.png')" src="/assets/icon/kolnbayernrealresultK.png"></ion-img>
+        </ion-col>
+        <ion-col>
+          <ion-img (click)="showMeThisImage('/assets/icon/kolnbayernrealresultB.png')" src="/assets/icon/kolnbayernrealresultB.png"></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-img (click)="showMeThisImage('/assets/icon/receivedgoalsagainstkoln.png')" src="/assets/icon/receivedgoalsagainstkoln.png"></ion-img>
+        </ion-col>
+        <ion-col>
+          <ion-img (click)="showMeThisImage('/assets/icon/scoredgoalsagainstkoln.png')" src="/assets/icon/scoredgoalsagainstkoln.png"></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
